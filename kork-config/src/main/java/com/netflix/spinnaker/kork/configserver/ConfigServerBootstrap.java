@@ -33,5 +33,6 @@ public class ConfigServerBootstrap {
     if (System.getProperty(key) == null) {
       System.setProperty(key, value);
     }
+    System.out.println("From Kork: defaultSystemProperty - " + key + " : " + value);
   }
 }

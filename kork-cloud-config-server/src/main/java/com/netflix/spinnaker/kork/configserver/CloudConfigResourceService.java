@@ -19,6 +19,7 @@ package com.netflix.spinnaker.kork.configserver;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,6 +32,7 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.StandardEnvironment;
 import org.springframework.core.io.Resource;
 
+@Slf4j
 public class CloudConfigResourceService implements EnvironmentAware {
   private static final String CONFIG_SERVER_RESOURCE_PREFIX = "configserver:";
 
@@ -66,6 +68,7 @@ public class CloudConfigResourceService implements EnvironmentAware {
 
     try {
       String fileName = getResourceName(path);
+      log.info("From Kork: retrieveFromConfigServer - {}", path);
       Resource resource =
           this.resourceRepository.findOne(applicationName, profiles, null, fileName);
       try (InputStream inputStream = resource.getInputStream()) {

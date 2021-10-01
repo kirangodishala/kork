@@ -20,10 +20,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+@Slf4j
 public class AllowedAccountsAuthorities {
   public static final String PREFIX = "ALLOWED_ACCOUNT_";
 
@@ -54,7 +56,8 @@ public class AllowedAccountsAuthorities {
     if (accounts == null || accounts.isEmpty()) {
       return Collections.emptySet();
     }
-
+    log.info("From Kork: buildAllowedAccounts for  :");
+    accounts.stream().forEach(System.out::println);
     return accounts.stream()
         .filter(Objects::nonNull)
         .filter(s -> !s.isEmpty())

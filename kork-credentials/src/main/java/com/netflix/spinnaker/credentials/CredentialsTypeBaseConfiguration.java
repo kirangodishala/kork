@@ -26,6 +26,7 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.ConstructorArgumentValues;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
@@ -44,6 +45,7 @@ import org.springframework.core.ResolvableType;
  * AbstractCredentialsLoader} that may have been added as a bean and create default implementations
  * otherwise.
  */
+@Slf4j
 @RequiredArgsConstructor
 public class CredentialsTypeBaseConfiguration<
         T extends Credentials, U extends CredentialsDefinition>
@@ -77,6 +79,7 @@ public class CredentialsTypeBaseConfiguration<
                     registerCredentialsRepository(
                         applicationContext, properties, lifecycleHandler));
 
+    log.info("From Kork: CredentialsRepository Type={}", credentialsRepository.getType());
     // Get or build credential source
     CredentialsDefinitionSource<U> credentialsDefinitionSource =
         getParameterizedBean(

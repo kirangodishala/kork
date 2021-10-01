@@ -16,11 +16,13 @@
 
 package com.netflix.spinnaker.kork.configserver;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.EnumerablePropertySource;
 import org.springframework.core.env.PropertySource;
 
+@Slf4j
 public class CloudConfigAwarePropertySource extends EnumerablePropertySource<PropertySource> {
   private final ConfigurableApplicationContext context;
   private CloudConfigResourceService resourceService;
@@ -38,6 +40,7 @@ public class CloudConfigAwarePropertySource extends EnumerablePropertySource<Pro
       if (CloudConfigResourceService.isCloudConfigResource(stringValue)) {
         resolveResourceService(stringValue);
         value = resourceService.getLocalPath(stringValue);
+        log.info("From Kork: CloudConfigResource - {}:{}", stringValue, value.toString());
       }
     }
     return value;
